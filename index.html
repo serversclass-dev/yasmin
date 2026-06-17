@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شركة ياسمين ليبيا الحديثة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red:          #F4041D;
+            --red-deep:     #C70018;
+            --green:        #2F8D1F;
+            --green-dark:   #1e6013;
+            --green-bright: #81F417;
+            --gold:         #F4BC0A;
+            --gold-light:   #f9d55a;
+            --orange:       #F47C04;
+            --gray-light:   #F4F4F4;
+            --white:        #ffffff;
+            --text-dark:    #141414;
+            --text-gray:    #5a5a5a;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--gray-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* ══════════════════════════════════════
+           NAVBAR
+        ══════════════════════════════════════ */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all .45s cubic-bezier(.4,0,.2,1);
+        }
+        .navbar.scrolled {
+            background: rgba(30,96,19,.97);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: .75rem 3rem;
+            box-shadow: 0 4px 30px rgba(0,0,0,.25);
+        }
+        .nav-brand { display: flex; align-items: center; gap: .9rem; }
+        .nav-brand img {
+            height: 52px; width: auto;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,.4));
+            transition: transform .3s;
+        }
+        .nav-brand img:hover { transform: scale(1.06); }
+        .nav-brand-text { color: #fff; font-weight: 800; font-size: .9rem; line-height: 1.4; }
+        .nav-brand-text small { display: block; font-weight: 400; font-size: .72rem; color: rgba(255,255,255,.65); }
+
+        .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+        .nav-links a {
+            color: rgba(255,255,255,.9);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: .95rem;
+            position: relative;
+            transition: color .3s;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; right: 0;
+            width: 0; height: 2px;
+            background: var(--gold);
+            transition: width .35s ease;
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-cta {
+            background: var(--red) !important;
+            color: #fff !important;
+            padding: .5rem 1.4rem;
+            border-radius: 50px;
+            font-weight: 800 !important;
+            display: inline-flex !important;
+            align-items: center;
+            gap: .45rem;
+            box-shadow: 0 4px 20px rgba(244,4,29,.35);
+            transition: all .3s ease !important;
+        }
+        .nav-cta:hover {
+            background: var(--red-deep) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(244,4,29,.5) !important;
+        }
+        .nav-cta::after { display: none !important; }
+        .nav-cta svg { width: 15px; height: 15px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+        .hamburger span { display: block; width: 26px; height: 2px; background: white; border-radius: 2px; transition: all .3s; }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed; inset: 0;
+            background: var(--green-dark);
+            z-index: 1100;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 2rem;
+            transform: translateX(100%);
+            transition: transform .4s cubic-bezier(.4,0,.2,1);
+        }
+        .mobile-menu.open { transform: translateX(0); }
+        .mobile-menu a { color: white; text-decoration: none; font-size: 1.6rem; font-weight: 700; transition: color .3s; }
+        .mobile-menu a:hover { color: var(--gold); }
+        .mobile-close {
+            position: absolute; top: 1.5rem; left: 2rem;
+            background: none; border: none;
+            color: rgba(255,255,255,.7);
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem; cursor: pointer;
+            display: flex; align-items: center; gap: .5rem;
+        }
+        .mobile-close svg { stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+        /* ══════════════════════════════════════
+           HERO
+        ══════════════════════════════════════ */
+        .hero {
+            position: relative;
+            height: 100vh; min-height: 700px;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(145deg, var(--green-dark) 0%, var(--green) 45%, #3da82e 100%);
+        }
+        .hero-glow {
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 60% 60% at 15% 50%, rgba(244,188,10,.14) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 85% 20%, rgba(47,141,31,.25) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 60% at 50% 90%, rgba(30,96,19,.6) 0%, transparent 60%);
+            animation: glowShift 9s ease-in-out infinite alternate;
+        }
+        @keyframes glowShift {
+            0%   { opacity: .7; transform: scale(1); }
+            100% { opacity: 1;  transform: scale(1.06); }
+        }
+        .particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+        .p-dot {
+            position: absolute; border-radius: 50%;
+            background: rgba(244,188,10,.55);
+            animation: pFloat linear infinite;
+        }
+        @keyframes pFloat {
+            0%   { transform: translateY(110vh) rotate(0deg);    opacity: 0; }
+            8%   { opacity: 1; }
+            92%  { opacity: 1; }
+            100% { transform: translateY(-120px) rotate(720deg); opacity: 0; }
+        }
+        .jasmine-deco { position: absolute; pointer-events: none; }
+        .jasmine-deco.right { right: -80px; top: 50%; width: 380px; opacity: .07; animation: spinSlow 35s linear infinite; }
+        .jasmine-deco.left  { left: -100px; bottom: -60px; width: 300px; opacity: .06; animation: spinSlow 28s linear infinite reverse; }
+        @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .hero-content {
+            position: relative; z-index: 10;
+            text-align: center; color: #fff;
+            padding: 2rem; max-width: 950px;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: .5rem;
+            background: rgba(244,188,10,.18);
+            border: 1px solid rgba(244,188,10,.45);
+            color: var(--gold);
+            padding: .45rem 1.6rem; border-radius: 50px;
+            font-size: .83rem; font-weight: 700;
+            margin-bottom: 1.8rem; letter-spacing: .04em;
+            animation: fadeDown .8s ease .2s both;
+        }
+        .hero-badge svg { width: 15px; height: 15px; fill: var(--gold); flex-shrink: 0; }
+
+        .hero-title {
+            font-size: clamp(1.9rem, 5vw, 3.8rem);
+            font-weight: 900; line-height: 1.25;
+            margin-bottom: 1.2rem;
+            text-shadow: 0 4px 24px rgba(0,0,0,.3);
+            animation: fadeDown .8s ease .4s both;
+        }
+        .hero-title .gold-line {
+            color: var(--gold); display: block;
+            font-size: clamp(1.1rem, 3vw, 2rem);
+            font-weight: 600; margin-top: .5rem; opacity: .92;
+        }
+        .hero-sub {
+            font-size: clamp(.95rem, 2.3vw, 1.25rem);
+            color: rgba(255,255,255,.78); line-height: 2;
+            margin-bottom: 2.8rem;
+            animation: fadeDown .8s ease .6s both;
+        }
+        .hero-btns {
+            display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+            animation: fadeDown .8s ease .8s both;
+        }
+        .btn-primary {
+            background: var(--red); color: #fff;
+            padding: .9rem 2.6rem; border-radius: 50px;
+            font-family: 'Cairo', sans-serif; font-weight: 800; font-size: 1rem;
+            border: none; cursor: pointer; text-decoration: none;
+            display: inline-flex; align-items: center; gap: .5rem;
+            box-shadow: 0 8px 30px rgba(244,4,29,.4);
+            transition: all .35s ease;
+        }
+        .btn-primary:hover { background: var(--red-deep); transform: translateY(-4px); box-shadow: 0 18px 45px rgba(244,4,29,.55); }
+        .btn-primary svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .btn-ghost {
+            background: transparent; color: white;
+            padding: .9rem 2.6rem; border-radius: 50px;
+            font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 1rem;
+            border: 2px solid rgba(255,255,255,.45);
+            cursor: pointer; text-decoration: none;
+            display: inline-flex; align-items: center; gap: .5rem;
+            transition: all .35s ease;
+        }
+        .btn-ghost:hover { border-color: white; background: rgba(255,255,255,.1); transform: translateY(-4px); }
+        .btn-ghost svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+        .scroll-arrow {
+            position: absolute; bottom: 32px; left: 50%;
+            transform: translateX(-50%); z-index: 10;
+            animation: arrowBounce 2.2s ease infinite;
+        }
+        .scroll-arrow span {
+            display: block; width: 22px; height: 22px;
+            border-right: 2px solid rgba(255,255,255,.55);
+            border-bottom: 2px solid rgba(255,255,255,.55);
+            transform: rotate(45deg); margin: -7px auto;
+        }
+        @keyframes arrowBounce {
+            0%,100% { transform: translateX(-50%) translateY(0); }
+            50%      { transform: translateX(-50%) translateY(12px); }
+        }
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-28px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ══════════════════════════════════════
+           WAVE DIVIDERS
+        ══════════════════════════════════════ */
+        .wave { overflow: hidden; line-height: 0; }
+        .wave svg { display: block; width: 100%; }
+
+        /* ══════════════════════════════════════
+           SHARED SECTION STYLES
+        ══════════════════════════════════════ */
+        section { padding: 5.5rem 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .sec-header { text-align: center; margin-bottom: 4rem; }
+        .sec-tag {
+            display: inline-block;
+            background: rgba(47,141,31,.1); color: var(--green);
+            padding: .4rem 1.3rem; border-radius: 50px;
+            font-size: .82rem; font-weight: 800;
+            border: 1px solid rgba(47,141,31,.2);
+            margin-bottom: .9rem; letter-spacing: .03em;
+        }
+        .sec-title { font-size: clamp(1.7rem, 4vw, 2.8rem); font-weight: 900; color: var(--green-dark); line-height: 1.3; }
+        .sec-title span { color: var(--green); }
+        .sec-line { width: 55px; height: 4px; background: linear-gradient(135deg, var(--red), var(--gold)); margin: 1rem auto; border-radius: 2px; }
+        .sec-desc { color: var(--text-gray); font-size: 1.03rem; line-height: 1.95; max-width: 580px; margin: 0 auto; }
+
+        /* ══════════════════════════════════════
+           ABOUT
+        ══════════════════════════════════════ */
+        .about { background: var(--white); }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+        .about-highlight {
+            font-size: 1.12rem; font-weight: 700; color: var(--green);
+            border-right: 4px solid var(--gold);
+            padding-right: 1.1rem; margin-bottom: 1.4rem; line-height: 1.85;
+        }
+        .about-text p { color: var(--text-gray); line-height: 2.1; margin-bottom: .9rem; font-size: .98rem; }
+        .features { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; margin-top: 2rem; }
+        .feat { display: flex; align-items: center; gap: .7rem; font-weight: 700; color: var(--text-dark); font-size: .9rem; }
+        .feat-icon {
+            width: 36px; height: 36px;
+            background: linear-gradient(135deg, var(--green), #3da82e);
+            border-radius: 9px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .feat-icon svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+        .about-card {
+            background: linear-gradient(145deg, var(--green-dark), var(--green));
+            border-radius: 24px; padding: 3rem 2.5rem; color: white;
+            position: relative; overflow: hidden;
+            box-shadow: 0 30px 80px rgba(30,96,19,.3);
+        }
+        .about-card::before,
+        .about-card::after { content: ''; position: absolute; border-radius: 50%; background: rgba(244,188,10,.08); }
+        .about-card::before { width: 220px; height: 220px; top: -80px; left: -80px; }
+        .about-card::after  { width: 280px; height: 280px; bottom: -100px; right: -80px; }
+
+        .card-title {
+            font-size: 1.35rem; font-weight: 900; color: var(--gold);
+            margin-bottom: 2rem; position: relative; z-index: 1;
+            display: flex; align-items: center; gap: .6rem;
+        }
+        .card-title svg { width: 22px; height: 22px; fill: var(--gold); flex-shrink: 0; }
+        .values { list-style: none; display: flex; flex-direction: column; gap: 1.1rem; position: relative; z-index: 1; }
+        .values li { display: flex; align-items: flex-start; gap: .85rem; font-size: .93rem; line-height: 1.75; color: rgba(255,255,255,.88); }
+        .v-check {
+            width: 22px; height: 22px; background: var(--gold); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; margin-top: 3px;
+        }
+        .v-check svg { width: 12px; height: 12px; stroke: var(--green-dark); fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+
+        /* ══════════════════════════════════════
+           SERVICES
+        ══════════════════════════════════════ */
+        .services { background: var(--gray-light); }
+        .srv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; }
+        .srv-card {
+            background: var(--white); border-radius: 20px; padding: 2.5rem 2rem;
+            text-align: center; border: 1px solid rgba(47,141,31,.07);
+            position: relative; overflow: hidden;
+            transition: transform .4s ease, box-shadow .4s ease;
+        }
+        .srv-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(135deg, var(--green), var(--gold));
+            transform: scaleX(0); transform-origin: right; transition: transform .4s ease;
+        }
+        .srv-card:hover { transform: translateY(-9px); box-shadow: 0 28px 65px rgba(47,141,31,.13); }
+        .srv-card:hover::before { transform: scaleX(1); transform-origin: left; }
+        .srv-ico {
+            width: 82px; height: 82px;
+            background: rgba(47,141,31,.08); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem;
+            transition: background .4s ease;
+        }
+        .srv-ico svg {
+            width: 38px; height: 38px;
+            stroke: var(--green); fill: none;
+            stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+            transition: stroke .4s ease;
+        }
+        .srv-card:hover .srv-ico { background: linear-gradient(135deg, var(--green), #3da82e); }
+        .srv-card:hover .srv-ico svg { stroke: #fff; }
+        .srv-card h3 { font-size: 1.15rem; font-weight: 800; color: var(--green-dark); margin-bottom: .9rem; }
+        .srv-card p { color: var(--text-gray); font-size: .93rem; line-height: 1.85; }
+
+        /* ══════════════════════════════════════
+           STATS
+        ══════════════════════════════════════ */
+        .stats-sec {
+            background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
+            padding: 5rem 2rem; position: relative; overflow: hidden;
+        }
+        .stats-sec::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; position: relative; z-index: 1; }
+        .stat-item { text-align: center; color: white; }
+        .stat-num { font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: .6rem; }
+        .stat-lbl { font-size: .98rem; font-weight: 600; color: rgba(255,255,255,.75); }
+
+        /* ══════════════════════════════════════
+           CONTACT
+        ══════════════════════════════════════ */
+        .contact-sec { background: var(--white); }
+        .contact-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 3.5rem; align-items: start; }
+        .c-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1.5rem 0; border-bottom: 1px solid rgba(47,141,31,.1); }
+        .c-item:last-child { border-bottom: none; }
+        .c-ico {
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--green), #3da82e);
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 18px rgba(47,141,31,.25);
+        }
+        .c-ico svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .c-info h4 { font-weight: 800; color: var(--green-dark); font-size: .93rem; margin-bottom: .3rem; }
+        .c-info p, .c-info a { color: var(--text-gray); font-size: .88rem; line-height: 1.7; text-decoration: none; }
+        .c-info a.wa { color: #25d366; font-weight: 700; }
+        .c-info a.wa:hover { text-decoration: underline; }
+        .map-wrap { border-radius: 22px; overflow: hidden; box-shadow: 0 24px 70px rgba(0,0,0,.1); }
+        .map-wrap iframe { display: block; width: 100%; height: 420px; }
+
+        /* ══════════════════════════════════════
+           FOOTER
+        ══════════════════════════════════════ */
+        .footer { background: var(--green-dark); color: white; padding: 4.5rem 2rem 2rem; position: relative; }
+        .footer::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--red), var(--gold), var(--green-bright));
+        }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+        .f-brand img { height: 56px; margin-bottom: 1rem;  }
+        .f-brand p { color: rgba(255,255,255,.55); font-size: .88rem; line-height: 1.9; max-width: 290px; }
+        .f-col h4 { font-size: .95rem; font-weight: 800; color: var(--gold); margin-bottom: 1.4rem; }
+        .f-links { list-style: none; display: flex; flex-direction: column; gap: .75rem; }
+        .f-links a { color: rgba(255,255,255,.55); text-decoration: none; font-size: .88rem; transition: color .3s; }
+        .f-links a:hover { color: var(--gold); }
+        .f-bottom { border-top: 1px solid rgba(255,255,255,.1); padding-top: 2rem; text-align: center; color: rgba(255,255,255,.35); font-size: .82rem; }
+        .footer-jasmine { position: absolute; bottom: 0; left: 0; width: 260px; opacity: .04; pointer-events: none; }
+
+        /* ══════════════════════════════════════
+           WHATSAPP FLOAT
+        ══════════════════════════════════════ */
+        .wa-float { position: fixed; bottom: 28px; left: 28px; z-index: 990; display: flex; align-items: center; gap: .9rem; }
+        .wa-btn {
+            position: relative; width: 62px; height: 62px;
+            background: #25d366; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 8px 32px rgba(37,211,102,.4); text-decoration: none;
+            transition: transform .3s, box-shadow .3s;
+        }
+        .wa-btn::before {
+            content: ''; position: absolute; width: 62px; height: 62px;
+            background: rgba(37,211,102,.35); border-radius: 50%;
+            animation: waPing 2.2s ease infinite;
+        }
+        @keyframes waPing { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2.6); opacity: 0; } }
+        .wa-btn:hover { transform: scale(1.15); box-shadow: 0 14px 45px rgba(37,211,102,.55); }
+        .wa-btn svg { width: 32px; height: 32px; fill: white; position: relative; z-index: 1; }
+        .wa-label {
+            background: white; color: var(--text-dark);
+            padding: .5rem 1rem; border-radius: 10px;
+            font-size: .83rem; font-weight: 700;
+            box-shadow: 0 4px 18px rgba(0,0,0,.1); white-space: nowrap;
+            opacity: 0; transform: translateX(-8px);
+            transition: all .3s ease; pointer-events: none;
+        }
+        .wa-float:hover .wa-label { opacity: 1; transform: translateX(0); }
+
+        /* ══════════════════════════════════════
+           SCROLL REVEAL
+        ══════════════════════════════════════ */
+        .reveal        { opacity: 0; transform: translateY(45px);  transition: opacity .7s ease, transform .7s ease; }
+        .reveal-left   { opacity: 0; transform: translateX(-45px); transition: opacity .7s ease, transform .7s ease; }
+        .reveal-right  { opacity: 0; transform: translateX(45px);  transition: opacity .7s ease, transform .7s ease; }
+        .reveal-scale  { opacity: 0; transform: scale(.88);        transition: opacity .6s ease, transform .6s ease; }
+        .reveal.in, .reveal-left.in, .reveal-right.in, .reveal-scale.in { opacity: 1; transform: none; }
+        .d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; }
+        .d3 { transition-delay: .3s; } .d4 { transition-delay: .4s; }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE
+        ══════════════════════════════════════ */
+        @media (max-width: 1024px) {
+            .about-grid   { grid-template-columns: 1fr; gap: 3rem; }
+            .srv-grid     { grid-template-columns: repeat(2, 1fr); }
+            .stats-grid   { grid-template-columns: repeat(2, 1fr); gap: 3rem; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .footer-grid  { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .navbar { padding: .9rem 1.5rem; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .srv-grid  { grid-template-columns: 1fr; }
+            .features  { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            section { padding: 3.5rem 1.4rem; }
+            .stats-grid { grid-template-columns: repeat(2,1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══ MOBILE MENU ═══ -->
+<div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" onclick="closeMob()">
+        <svg viewBox="0 0 24 24" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        إغلاق
+    </button>
+    <a href="#about"    onclick="closeMob()">من نحن</a>
+    <a href="#services" onclick="closeMob()">خدماتنا</a>
+    <a href="#stats"    onclick="closeMob()">أرقامنا</a>
+    <a href="#contact"  onclick="closeMob()">تواصل معنا</a>
+</div>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar" id="navbar">
+    <div class="nav-brand">
+        <img src="logo.png" alt="Yasmin Libya">
+        <div class="nav-brand-text">
+            شركة ياسمين ليبيا الحديثة
+            <small>استيراد المواد الغذائية والمواشي واللحوم</small>
+        </div>
+    </div>
+    <ul class="nav-links">
+        <li><a href="#about">من نحن</a></li>
+        <li><a href="#services">خدماتنا</a></li>
+        <li><a href="#stats">أرقامنا</a></li>
+        <li>
+            <a href="#contact" class="nav-cta">
+                <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 16a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 5.26l3-.03a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                تواصل معنا
+            </a>
+        </li>
+    </ul>
+    <div class="hamburger" onclick="openMob()">
+        <span></span><span></span><span></span>
+    </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+    <div class="hero-glow"></div>
+    <div class="particles" id="pContainer"></div>
+
+    <svg class="jasmine-deco right" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <g fill="white">
+            <ellipse cx="100" cy="62" rx="14" ry="32" transform="rotate(0   100 100)"/>
+            <ellipse cx="100" cy="62" rx="14" ry="32" transform="rotate(72  100 100)"/>
+            <ellipse cx="100" cy="62" rx="14" ry="32" transform="rotate(144 100 100)"/>
+            <ellipse cx="100" cy="62" rx="14" ry="32" transform="rotate(216 100 100)"/>
+            <ellipse cx="100" cy="62" rx="14" ry="32" transform="rotate(288 100 100)"/>
+            <circle cx="100" cy="100" r="11"/>
+        </g>
+    </svg>
+    <svg class="jasmine-deco left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <g fill="white">
+            <ellipse cx="100" cy="62" rx="14" ry="32" transform="rotate(0   100 100)"/>
+            <ellipse cx="100" cy="62" rx="14" ry="32" transform="rotate(72  100 100)"/>
+            <ellipse cx="100" cy="62" rx="14" ry="32" transform="rotate(144 100 100)"/>
+            <ellipse cx="100" cy="62" rx="14" ry="32" transform="rotate(216 100 100)"/>
+            <ellipse cx="100" cy="62" rx="14" ry="32" transform="rotate(288 100 100)"/>
+            <circle cx="100" cy="100" r="11"/>
+        </g>
+    </svg>
+
+    <div class="hero-content">
+        <div class="hero-badge">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="var(--gold)">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+            جودة موثوقة · استيراد متخصص
+        </div>
+        <h1 class="hero-title">
+            شركة ياسمين ليبيا الحديثة
+            <span class="gold-line">لاستيراد المواد الغذائية والمواشي واللحوم</span>
+        </h1>
+        <p class="hero-sub">
+            نوفر أجود المنتجات الغذائية والمواشي واللحوم المستوردة<br>
+            وفق أعلى معايير الجودة والسلامة الغذائية الدولية
+        </p>
+        <div class="hero-btns">
+            <a href="#services" class="btn-primary">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                استكشف خدماتنا
+            </a>
+            <a href="#contact" class="btn-ghost">
+                <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                تواصل معنا
+            </a>
+        </div>
+    </div>
+
+    <div class="scroll-arrow"><span></span><span></span><span></span></div>
+</section>
+
+<!-- Wave hero → about -->
+<div class="wave" style="background:var(--white)">
+    <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,45 C320,90 820,0 1440,45 L1440,0 L0,0 Z" fill="#1e6013"/>
+    </svg>
+</div>
+
+<!-- ═══ ABOUT ═══ -->
+<section class="about" id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-text reveal-right">
+                <div class="sec-tag">من نحن</div>
+                <h2 class="sec-title" style="text-align:right;margin-bottom:.4rem">
+                    نحن <span>ياسمين ليبيا</span><br>شريككم الموثوق
+                </h2>
+                <div class="sec-line" style="margin:1rem 0"></div>
+                <p class="about-highlight">
+                    شركة ليبية رائدة متخصصة في استيراد وتوزيع المواد الغذائية والمواشي واللحوم بأعلى المعايير
+                </p>
+                <p>تأسست شركة ياسمين ليبيا الحديثة بهدف تلبية احتياجات السوق الليبي من المنتجات الغذائية عالية الجودة، مع الالتزام بتقديم أفضل المنتجات بأسعار تنافسية وخدمة متميزة.</p>
+                <p>نعمل وفق أعلى معايير الجودة والسلامة الغذائية الدولية، ونحرص على توفير منتجات طازجة وآمنة لعملائنا في جميع أنحاء ليبيا.</p>
+                <div class="features">
+                    <div class="feat">
+                        <div class="feat-icon">
+                            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <span>جودة مضمونة</span>
+                    </div>
+                    <div class="feat">
+                        <div class="feat-icon">
+                            <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                        </div>
+                        <span>توصيل سريع</span>
+                    </div>
+                    <div class="feat">
+                        <div class="feat-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        </div>
+                        <span>مصادر عالمية</span>
+                    </div>
+                    <div class="feat">
+                        <div class="feat-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                        </div>
+                        <span>شهادات معتمدة</span>
+                    </div>
+                    <div class="feat">
+                        <div class="feat-icon">
+                            <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="12"/><path d="M2 12h20"/></svg>
+                        </div>
+                        <span>خبرة واسعة</span>
+                    </div>
+                    <div class="feat">
+                        <div class="feat-icon">
+                            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <span>شراكات موثوقة</span>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal-left">
+                <div class="about-card">
+                    <h3 class="card-title">
+                        <svg viewBox="0 0 24 24" fill="var(--gold)" width="22" height="22">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-8v4h4l-5 8z"/>
+                        </svg>
+                        قيمنا ومبادئنا
+                    </h3>
+                    <ul class="values">
+                        <li>
+                            <span class="v-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                            <span>الالتزام بأعلى معايير الجودة في جميع منتجاتنا المستوردة</span>
+                        </li>
+                        <li>
+                            <span class="v-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                            <span>الشفافية والأمانة في التعامل مع عملائنا وشركائنا التجاريين</span>
+                        </li>
+                        <li>
+                            <span class="v-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                            <span>الالتزام الكامل بمعايير السلامة الغذائية الدولية المعتمدة</span>
+                        </li>
+                        <li>
+                            <span class="v-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                            <span>تقديم خدمة عملاء متميزة واستجابة سريعة لجميع الاحتياجات</span>
+                        </li>
+                        <li>
+                            <span class="v-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                            <span>المساهمة في تعزيز الأمن الغذائي وخدمة الاقتصاد الليبي</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Wave about → services -->
+<div class="wave" style="background:var(--gray-light)">
+    <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,45 C500,0 940,90 1440,45 L1440,90 L0,90 Z" fill="var(--white)"/>
+    </svg>
+</div>
+
+<!-- ═══ SERVICES ═══ -->
+<section class="services" id="services">
+    <div class="container">
+        <div class="sec-header reveal">
+            <div class="sec-tag">خدماتنا</div>
+            <h2 class="sec-title">ما نقدمه <span>لكم</span></h2>
+            <div class="sec-line"></div>
+            <p class="sec-desc">نقدم مجموعة شاملة من الخدمات في مجال استيراد وتوزيع المواد الغذائية والمواشي واللحوم عبر ليبيا</p>
+        </div>
+        <div class="srv-grid">
+            <div class="srv-card reveal d1">
+                <div class="srv-ico">
+                    <!-- Grain/wheat -->
+                    <svg viewBox="0 0 24 24"><path d="M12 22V6"/><path d="M5 12C5 12 3 10 3 8c0-2 2-3 4-2s3 3 3 3"/><path d="M19 12c0 0 2-2 2-4s-2-3-4-2-3 3-3 3"/><path d="M5 18c0 0-2-1-2-3s2-3 4-2 3 3 3 3"/><path d="M19 18c0 0 2-1 2-3s-2-3-4-2-3 3-3 3"/></svg>
+                </div>
+                <h3>المواد الغذائية</h3>
+                <p>نستورد أجود المواد الغذائية من مصادر عالمية موثوقة مع ضمان الجودة والطزاجة وفق المعايير الدولية</p>
+            </div>
+            <div class="srv-card reveal d2">
+                <div class="srv-ico">
+                    <!-- Livestock / animal -->
+                    <svg viewBox="0 0 24 24"><path d="M4 8c0-1 .5-2 1.5-2.5L7 5l1-2h8l1 2 1.5.5C19.5 6 20 7 20 8v3l-1 1v2l-1 1H6l-1-1v-2L4 11V8z"/><path d="M9 17v2"/><path d="M15 17v2"/><circle cx="9" cy="10" r=".75" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".75" fill="currentColor" stroke="none"/></svg>
+                </div>
+                <h3>المواشي</h3>
+                <p>استيراد المواشي من مصادر معتمدة مع توفير جميع الشهادات الصحية والبيطرية المطلوبة وضمان الجودة</p>
+            </div>
+            <div class="srv-card reveal d3">
+                <div class="srv-ico">
+                    <!-- Meat / utensils -->
+                    <svg viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><line x1="7" y1="2" x2="7" y2="11"/><path d="M21 15V2"/><path d="M18 15V2"/><path d="M21 15a3 3 0 1 1-6 0"/><line x1="18" y1="18" x2="18" y2="22"/></svg>
+                </div>
+                <h3>اللحوم</h3>
+                <p>أجود أنواع اللحوم الحلال المستوردة، محفوظة بأحدث تقنيات التبريد والتجميد للحفاظ على الجودة والطزاجة</p>
+            </div>
+            <div class="srv-card reveal d2">
+                <div class="srv-ico">
+                    <!-- Package / box -->
+                    <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                </div>
+                <h3>التوزيع والتوريد</h3>
+                <p>شبكة توزيع واسعة تغطي المناطق الليبية مع إمكانية التوريد للمطاعم والفنادق وسلاسل التجزئة</p>
+            </div>
+            <div class="srv-card reveal d3">
+                <div class="srv-ico">
+                    <!-- Search -->
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </div>
+                <h3>مراقبة الجودة</h3>
+                <p>فريق متخصص يضمن التزام جميع المنتجات بالمعايير الصحية ومتطلبات السلامة الغذائية المعتمدة</p>
+            </div>
+            <div class="srv-card reveal d4">
+                <div class="srv-ico">
+                    <!-- Clipboard -->
+                    <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="14" y2="15"/></svg>
+                </div>
+                <h3>الاستشارات التجارية</h3>
+                <p>استشارات متخصصة في مجال الاستيراد والتصدير لمساعدة عملائنا على اتخاذ القرارات التجارية الصحيحة</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Wave services → stats -->
+<div class="wave" style="background:var(--green-dark)">
+    <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,45 C360,90 1080,0 1440,45 L1440,90 L0,90 Z" fill="var(--gray-light)"/>
+    </svg>
+</div>
+
+<!-- ═══ STATS ═══ -->
+<section class="stats-sec" id="stats">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item reveal-scale d1">
+                <div class="stat-num" data-t="500">0</div>
+                <div class="stat-lbl">+ عميل موثوق</div>
+            </div>
+            <div class="stat-item reveal-scale d2">
+                <div class="stat-num" data-t="15">0</div>
+                <div class="stat-lbl">+ سنة خبرة</div>
+            </div>
+            <div class="stat-item reveal-scale d3">
+                <div class="stat-num" data-t="30">0</div>
+                <div class="stat-lbl">+ دولة مصدر</div>
+            </div>
+            <div class="stat-item reveal-scale d4">
+                <div class="stat-num" data-t="1000">0</div>
+                <div class="stat-lbl">+ شحنة مكتملة</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Wave stats → contact -->
+<div class="wave" style="background:var(--white)">
+    <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,45 C500,90 940,0 1440,45 L1440,0 L0,0 Z" fill="var(--green-dark)"/>
+    </svg>
+</div>
+
+<!-- ═══ CONTACT ═══ -->
+<section class="contact-sec" id="contact">
+    <div class="container">
+        <div class="sec-header reveal">
+            <div class="sec-tag">تواصل معنا</div>
+            <h2 class="sec-title">نحن هنا <span>لخدمتكم</span></h2>
+            <div class="sec-line"></div>
+            <p class="sec-desc">يسعدنا الرد على استفساراتكم وطلباتكم في أقرب وقت ممكن</p>
+        </div>
+        <div class="contact-grid">
+            <div class="reveal-right">
+                <div class="c-item">
+                    <div class="c-ico">
+                        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div class="c-info">
+                        <h4>الموقع</h4>
+                        <p>ليبيا<br>32°25'13.6"N · 14°45'41.4"E</p>
+                    </div>
+                </div>
+                <div class="c-item">
+                    <div class="c-ico">
+                        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 16a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 5.26l3-.03a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <div class="c-info">
+                        <h4>الهاتف</h4>
+                        <a href="tel:0912501924" style="color:var(--green);font-weight:800;font-size:1rem;">0912501924</a>
+                    </div>
+                </div>
+                <div class="c-item">
+                    <div class="c-ico">
+                        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <div class="c-info">
+                        <h4>واتساب</h4>
+                        <a href="https://wa.me/218912501924" target="_blank" class="wa">تواصل عبر واتساب ←</a>
+                    </div>
+                </div>
+                <div class="c-item">
+                    <div class="c-ico">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div class="c-info">
+                        <h4>ساعات العمل</h4>
+                        <p>السبت – الخميس<br>8:00 ص – 6:00 م</p>
+                    </div>
+                </div>
+            </div>
+            <div class="map-wrap reveal-left">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3367.9521800361467!2d14.761508000000001!3d32.42043900000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzLCsDI1JzEzLjYiTiAxNMKwNDUnNDEuNCJF!5e0!3m2!1sar!2sly!4v1781693452602!5m2!1sar!2sly"
+                    allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Wave contact → footer -->
+<div class="wave" style="background:var(--green-dark)">
+    <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0,45 C360,0 1080,90 1440,45 L1440,90 L0,90 Z" fill="var(--white)"/>
+    </svg>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+    <svg class="footer-jasmine" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <g fill="white">
+            <ellipse cx="100" cy="62" rx="14" ry="32" transform="rotate(0   100 100)"/>
+            <ellipse cx="100" cy="62" rx="14" ry="32" transform="rotate(72  100 100)"/>
+            <ellipse cx="100" cy="62" rx="14" ry="32" transform="rotate(144 100 100)"/>
+            <ellipse cx="100" cy="62" rx="14" ry="32" transform="rotate(216 100 100)"/>
+            <ellipse cx="100" cy="62" rx="14" ry="32" transform="rotate(288 100 100)"/>
+            <circle cx="100" cy="100" r="11"/>
+        </g>
+    </svg>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="f-brand">
+                <img src="logo.png" alt="Yasmin Libya" >
+                <p>شركة ياسمين ليبيا الحديثة لاستيراد المواد الغذائية والمواشي واللحوم — جودة موثوقة في كل شحنة</p>
+            </div>
+            <div class="f-col">
+                <h4>روابط سريعة</h4>
+                <ul class="f-links">
+                    <li><a href="#about">من نحن</a></li>
+                    <li><a href="#services">خدماتنا</a></li>
+                    <li><a href="#stats">أرقامنا</a></li>
+                    <li><a href="#contact">تواصل معنا</a></li>
+                </ul>
+            </div>
+            <div class="f-col">
+                <h4>خدماتنا</h4>
+                <ul class="f-links">
+                    <li><a href="#">المواد الغذائية</a></li>
+                    <li><a href="#">المواشي</a></li>
+                    <li><a href="#">اللحوم</a></li>
+                    <li><a href="#">التوزيع</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="f-bottom">
+            <p>© 2025 شركة ياسمين ليبيا الحديثة · جميع الحقوق محفوظة</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ═══ WHATSAPP FLOAT ═══ -->
+<div class="wa-float">
+    <span class="wa-label">تواصل عبر واتساب</span>
+    <a href="https://wa.me/218912501924" target="_blank" class="wa-btn" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+</div>
+
+<script>
+    /* Navbar */
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60), { passive: true });
+
+    /* Mobile menu */
+    function openMob()  { document.getElementById('mobileMenu').classList.add('open');    document.body.style.overflow = 'hidden'; }
+    function closeMob() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow = ''; }
+
+    /* Particles */
+    const pC = document.getElementById('pContainer');
+    for (let i = 0; i < 22; i++) {
+        const d = document.createElement('div');
+        d.className = 'p-dot';
+        const s = Math.random() * 5 + 2;
+        d.style.cssText = `left:${Math.random()*100}%;width:${s}px;height:${s}px;animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*12}s;`;
+        pC.appendChild(d);
+    }
+
+    /* Scroll reveal */
+    const revIO = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revIO.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale').forEach(el => revIO.observe(el));
+
+    /* Counter */
+    const cntIO = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (!e.isIntersecting || e.target._done) return;
+            e.target._done = true;
+            const target = +e.target.dataset.t;
+            const inc = target / ((2200 / 1000) * 60);
+            let cur = 0;
+            const tick = setInterval(() => {
+                cur = Math.min(cur + inc, target);
+                e.target.textContent = Math.floor(cur).toLocaleString('ar-LY');
+                if (cur >= target) clearInterval(tick);
+            }, 1000 / 60);
+        });
+    }, { threshold: 0.35 });
+    document.querySelectorAll('.stat-num[data-t]').forEach(c => cntIO.observe(c));
+
+    /* Smooth scroll */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const t = document.querySelector(a.getAttribute('href'));
+            if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        });
+    });
+</script>
+</body>
+</html>
